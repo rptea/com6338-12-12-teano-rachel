@@ -27,6 +27,9 @@ class Word {
 
   // implement the guessLetter function:
   guessLetter(letter) {
+    if (this.correctLetters.includes(letter)||this.incorrectLetters.includes(letter)) {
+      return;
+    }
     if (this.correctLetters.includes(letter)) {
       this.correctLetters.push(letter);
       this.displayWord(letter);
