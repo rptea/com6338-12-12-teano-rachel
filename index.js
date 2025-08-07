@@ -26,16 +26,24 @@ class Word {
   }
 
   // implement the guessLetter function:
-  // guessLetter(letter) {}
+  guessLetter(letter) {
+    if (this.correctLetters.includes(letter)) {
+      this.correctLetters.push(letter);
+      this.displayWord(letter);
+    } else {
+      this.incorrectLetters.push(letter);
+      this.remainingGuesses--
+    }
+  }
 
   // implement the updateScreen function:
-  // updateScreen() {}
+  updateScreen() {}
 
   // implement the isGameOver function:
-  // isGameOver() {}
+  isGameOver() {}
 
   // implement the getWinOrLoss function:
-  // getWinOrLoss() {}
+  getWinOrLoss() {}
 }
 
 function newGame() {
