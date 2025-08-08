@@ -27,26 +27,77 @@ class Word {
 
   // implement the guessLetter function:
   guessLetter(letter) {
-    if (this.correctLetters.includes(letter)||this.incorrectLetters.includes(letter)) {
+    // ignore repeat guesses
+    if (this.correctLetters.includes(letter) || this.incorrectLetters.includes(letter)) {
       return;
     }
-    if (this.correctLetters.includes(letter)) {
+
+    if (this.word.includes(letter)) {
       this.correctLetters.push(letter);
-      this.displayWord(letter);
     } else {
       this.incorrectLetters.push(letter);
-      this.remainingGuesses--
+      this.remainingGuesses--;
     }
+    this.updateScreen();
   }
 
   // implement the updateScreen function:
-  updateScreen() {}
+  updateScreen() {
+    let newDisplay = "";
+
+    for (let i = 0; i < this.word.length; i++) {
+      const currentLetter = this.word[i];
+      if (this.correctLetters.includes(currentLetter)) {
+        newDisplay = newDisplay + currentLetter;
+      } else {
+        newDisplay = newDisplay + "_";
+      }
+    }
+
+    this.displayWord = newDisplay;
+
+    const displayWord = document.getElementById('word-to-guess');
+    const remainingGuesses = document.getElementById('remaining-guesses');
+    const incorrectLetters = document.getElementById('incorrect-letters');
+
+    if (displayWord) {
+      displayWord.textContent = this.displayWord;
+    }
+    if (remainingGuesses) {
+    remainingGuesses.textContent = this.remainingGuesses;
+    }
+    if (incorrectLetters) {
+    incorrectLetters.textContent = this.incorrectLetters.join(",");
+    }
+  }
 
   // implement the isGameOver function:
-  isGameOver() {}
+  isGameOver() {
+    if (this.displayWord === this.word) {
+      return true;
+    }
+    
+    if (this.remainingGuesses <= 0) {
+      return true;
+    }
+
+    return false;
+  }
 
   // implement the getWinOrLoss function:
-  getWinOrLoss() {}
+  getWinOrLoss() {
+    if (this.displayWord !== this.word && this.remainingGuesses > 0) {
+      return null;
+    }
+
+    if (this.displayWord === this.word && this.remainingGuesses > 0) {
+      return "win";
+    }
+
+    if (this.displayWord !== this.word && this.remainingGuesses <= 0) {
+      return "loss";
+    }
+  }
 }
 
 function newGame() {
