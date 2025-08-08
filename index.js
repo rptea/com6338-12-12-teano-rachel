@@ -31,43 +31,57 @@ class Word {
     if (this.correctLetters.includes(letter) || this.incorrectLetters.includes(letter)) {
       return;
     }
-
+    // if letter exists in word
     if (this.word.includes(letter)) {
+      // add the letter to correctLetters array
       this.correctLetters.push(letter);
     } else {
+      // add letter to incorrectLetters array
       this.incorrectLetters.push(letter);
-      this.remainingGuesses--;
+      // subtrack one from remainingGuesses
+      this.remainingGuesses = this.remainingGuesses - 1;
     }
-    this.updateScreen();
-  }
-
-  // implement the updateScreen function:
-  updateScreen() {
+    
+    // build new displayWord from scratch
     let newDisplay = "";
 
+    // loop through every letter in the word
     for (let i = 0; i < this.word.length; i++) {
       const currentLetter = this.word[i];
+      // display letter if it is in correctLetters array
       if (this.correctLetters.includes(currentLetter)) {
         newDisplay = newDisplay + currentLetter;
+        // otherwise use underscore
       } else {
         newDisplay = newDisplay + "_";
       }
     }
 
+    // update displayWord
     this.displayWord = newDisplay;
 
+    // call updateScreen - refreshes HTML
+    this.updateScreen();
+  }
+
+  // implement the updateScreen function:
+  updateScreen() {
+    // DOM elements
     const displayWord = document.getElementById('word-to-guess');
     const remainingGuesses = document.getElementById('remaining-guesses');
     const incorrectLetters = document.getElementById('incorrect-letters');
 
+    // update if element exists
     if (displayWord) {
       displayWord.textContent = this.displayWord;
     }
+    // show remaining guesses
     if (remainingGuesses) {
     remainingGuesses.textContent = this.remainingGuesses;
     }
+    // show incorrect letters as a comma-separated list
     if (incorrectLetters) {
-    incorrectLetters.textContent = this.incorrectLetters.join(",");
+    incorrectLetters.textContent = this.incorrectLetters.join(", ");
     }
   }
 
